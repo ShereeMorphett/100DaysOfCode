@@ -8,7 +8,7 @@ Description: Implementing a simple Blackjack game.
 
 ## Snake Game
 
-Description: Creating a classic Snake game using Python or another programming language.
+Description: Creating a classic Snake game using Python.
 
 ## Pong Game
 
