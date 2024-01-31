@@ -1,6 +1,6 @@
 import random
-import math
-
+import art
+import os
 ############### Blackjack Project #####################
 
 #Difficulty Normal 😎: Use all Hints below to complete the project.
@@ -35,11 +35,10 @@ import math
 
 #Hint 12: Once the user is done, it's time to let the computer play. The computer should keep drawing cards as long as it has a score less than 17. √
 
-#Hint 13: Create a function called compare() and pass in the user_score and computer_score. If the computer and user both have the same score, then it's a draw. If the computer has a blackjack (0), then the user loses. If the user has a blackjack (0), then the user wins. If the user_score is over 21, then the user loses. If the computer_score is over 21, then the computer loses. If none of the above, then the player with the highest score wins.
+#Hint 13: Create a function called compare() and pass in the user_score and computer_score. If the computer and user both have the same score, then it's a draw. If the computer has a blackjack (0), then the user loses. If the user has a blackjack (0), then the user wins. If the user_score is over 21, then the user loses. If the computer_score is over 21, then the computer loses. If none of the above, then the player with the highest score wins.√
 
 #Hint 14: Ask the user if they want to restart the game. If they answer yes, clear the console and start a new game of blackjack and show the logo from art.py.
 
-import random
 
 def deal_card():
 	cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
@@ -56,29 +55,42 @@ def calculate_score(hand):
 	if sum(hand) <= 21:
 		return sum(hand)
 	else:
-		return float('inf')  # Game over state
+		return float('inf')  
 
 def computer_play(hand):
 	while calculate_score(hand) != 0 and calculate_score(hand) <= 17 and calculate_score(hand) != float('inf'):
 		hand.append(deal_card())
 	return calculate_score(hand)
 
-
 def compare(user_score, comp_score):
-	if user_score == 0:
-		return "User got blackjack, they win"
-	elif comp_score == 0:
-		return "Computer got blackjack, they win"
-	elif user_score < comp_score and not math.isinf(user_score):
-		return "Computer wins!"
-	elif user_score > comp_score and not math.isinf(comp_score):
-		return "User wins"
-	else:
-		return "Draw"
+    if user_score == 0:
+        return "User got blackjack, they win"
+    elif comp_score == 0:
+        return "Computer got blackjack, they win"
+    elif user_score != float('inf') and comp_score != float('inf'):
+        if user_score < comp_score:
+            return "Computer wins!"
+        elif user_score > comp_score:
+            return "User wins"
+        else:
+            return "Draw"
+    elif user_score == float('inf') and comp_score != float('inf'):
+        return "Computer wins!"
+    elif user_score != float('inf') and comp_score == float('inf'):
+        return "User wins"
+    else:
+        return "Draw"
+
+def clear_console():
+	os.system('cls' if os.name == 'nt' else 'clear')
+	art.print_logo()
+
 	
 def main():
 	game_state = "Y"
-	while game_state == "Y" or game_state == "y":
+	
+	while game_state.lower() == "y":
+		clear_console()
 		user_cards = []
 		computer_cards = []
 
